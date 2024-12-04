@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class LibraryManagement {
 
     private Library library = new Library();
-    private Transaction transaction = Transaction.getTransaction();  // Use Singleton instance of Transaction
+    private Transaction transaction = Transaction.getTransaction();  // Singleton instance of Transaction
 
     public static void main(String[] args) {
         new LibraryManagement().run();  // Start the program
@@ -37,9 +37,11 @@ public class LibraryManagement {
                     String name = scanner.next();
                     scanner.nextLine();
 
-                    Member newMember = new Member(id, name);
-                    library.addMember(newMember);  // Add member to the library
-                    System.out.println("Member added successfully.");
+                    if (addMember(id, name)) {
+                        System.out.println("Member added successfully.");
+                    } else {
+                        System.out.println("Member with ID " + id + " already exists.");
+                    }
                     break;
                 case 2:
                     System.out.print("Enter book ID: ");
@@ -48,9 +50,11 @@ public class LibraryManagement {
                     String title = scanner.next();
                     scanner.nextLine();
 
-                    Book newBook = new Book(id, title);
-                    library.addBook(newBook);  // Add book to the library
-                    System.out.println("Book added to library successfully.");
+                    if (addBook(id, title)) {
+                        System.out.println("Book added to library successfully.");
+                    } else {
+                        System.out.println("Book with ID " + id + " already exists.");
+                    }
                     break;
                 case 3:
                     System.out.println("\n--- Available Members ---");
@@ -124,5 +128,25 @@ public class LibraryManagement {
                     System.out.println("Invalid choice! Please try again.");
             }
         }
+    }
+
+    // Modified addMember method
+    private boolean addMember(int id, String name) {
+        if (library.findMemberById(id) != null) {
+            return false;  // Prevent duplicate
+        }
+        Member newMember = new Member(id, name);
+        library.addMember(newMember);
+        return true;
+    }
+
+    // Modified addBook method
+    private boolean addBook(int id, String title) {
+        if (library.findBookById(id) != null) {
+            return false;  // Prevent duplicate
+        }
+        Book newBook = new Book(id, title);
+        library.addBook(newBook);
+        return true;
     }
 }
