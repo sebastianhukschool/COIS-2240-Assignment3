@@ -2,6 +2,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Transaction {
@@ -65,9 +67,16 @@ public class Transaction {
         }
     }
 
-    // Method to display transaction history (we will implement file reading in Step 2.3)
+    // Method to display transaction history
     public void displayTransactionHistory() {
-        System.out.println("Displaying transaction history...");
-        // For now, this will just show a placeholder message
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.txt"))) {
+            String line;
+            System.out.println("\n--- Transaction History ---");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to read transaction history: " + e.getMessage());
+        }
     }
 }
