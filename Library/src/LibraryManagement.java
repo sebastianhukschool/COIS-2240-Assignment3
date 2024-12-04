@@ -10,7 +10,7 @@ public class LibraryManagement {
     }
 
     private void run() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);  // Create Scanner object
         boolean running = true;
 
         while (running) {
@@ -128,6 +128,9 @@ public class LibraryManagement {
                     System.out.println("Invalid choice! Please try again.");
             }
         }
+        
+        // Close the scanner to release the resource
+        scanner.close();
     }
 
     // Modified addMember method
