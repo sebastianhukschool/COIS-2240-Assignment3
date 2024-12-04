@@ -6,14 +6,14 @@ import java.io.IOException;
 
 public class Transaction {
 
-    // Step 1: Singleton instance
+    // Singleton instance
     private static Transaction instance;
 
-    // Step 2: Private constructor to prevent instantiation
+    // Private constructor to prevent instantiation
     private Transaction() {
     }
 
-    // Step 3: Get the Singleton instance
+    // Get the Singleton instance
     public static Transaction getTransaction() {
         if (instance == null) {
             instance = new Transaction();
@@ -28,7 +28,7 @@ public class Transaction {
             member.borrowBook(book);
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
             System.out.println(transactionDetails);
-            saveTransaction(transactionDetails);
+            saveTransaction(transactionDetails); // Save transaction to file
             return true;
         } else {
             System.out.println("The book is not available.");
@@ -43,7 +43,7 @@ public class Transaction {
             book.returnBook();
             String transactionDetails = getCurrentDateTime() + " - Returning: " + member.getName() + " returned " + book.getTitle();
             System.out.println(transactionDetails);
-            saveTransaction(transactionDetails);
+            saveTransaction(transactionDetails); // Save transaction to file
         } else {
             System.out.println("This book was not borrowed by the member.");
         }
@@ -59,14 +59,15 @@ public class Transaction {
     private void saveTransaction(String transactionDetails) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true))) {
             writer.write(transactionDetails);
-            writer.newLine();
+            writer.newLine();  // Write a new line after each transaction
         } catch (IOException e) {
             System.out.println("Failed to save transaction: " + e.getMessage());
         }
     }
 
-    // Method to display transaction history (to be implemented later)
+    // Method to display transaction history (we will implement file reading in Step 2.3)
     public void displayTransactionHistory() {
         System.out.println("Displaying transaction history...");
+        // For now, this will just show a placeholder message
     }
 }
